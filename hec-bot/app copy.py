@@ -19,11 +19,11 @@ from vanna.google import GoogleGeminiChat
 class MyVanna(ChromaDB_VectorStore, GoogleGeminiChat):
     def __init__(self, config=None):
         ChromaDB_VectorStore.__init__(self, config=config)
-        GoogleGeminiChat.__init__(self, config={'api_key': 'AIzaSyCA89umuCeGxQuN2Pf3EUMXFGRjWIk4fgQ', 'model': 'models/gemini-2.5-flash'})
+        GoogleGeminiChat.__init__(self, config={'api_key': '', 'model': 'models/gemini-2.5-flash'})
 
 vn = MyVanna()
 
-vn.connect_to_mssql(odbc_conn_str=r'DRIVER={ODBC Driver 17 for SQL Server};SERVER=W11-NB-FAUZI\HECTRONIC;DATABASE=BISM_20250731;UID=sa;PWD=FleetAccess1$')
+vn.connect_to_mssql(odbc_conn_str=r'DRIVER={ODBC Driver 17 for SQL Server};SERVER=;DATABASE=;UID=sa;PWD=')
 
 auth = SimplePassword(users=[{"email": "admin@hectronic.in", "password": "FleetAccess1$"}])
 
