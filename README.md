@@ -1,311 +1,251 @@
-# Vanna 2.0: Turn Questions into Data Insights
+# Hectronic ChatBot
 
-**Natural language → SQL → Answers.** Now with enterprise security and user-aware permissions.
+Flask web server for chatting with your MSSQL database using Vanna AI + Google Gemini.
 
-[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://python.org)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+## Features
 
-https://github.com/user-attachments/assets/476cd421-d0b0-46af-8b29-0f40c73d6d83
+- 🤖 **AI-Powered SQL Generation**: Natural language to SQL queries using Vanna AI and Google Gemini
+- 💾 **Vector Database**: ChromaDB for efficient training data storage and retrieval
+- 🔐 **Authentication**: Simple password-based authentication
+- 📊 **Training Data Management**: Web interface to manage and update training data
+- 🎨 **Modern UI**: Clean and responsive interface with gradient designs
+- 🔄 **Real-time Chat**: Interactive chatbot interface for database queries
+- 📈 **Query Results**: Display query results in formatted tables (limited to 5 rows by default)
+- 📥 **Export to CSV**: Export query results to CSV file
+- 🔍 **Search & Filter**: Advanced filtering for training data management
+- 💬 **Chat Features**: Message history, typing indicators, suggestion chips
+- 📋 **Copy SQL**: Copy generated SQL queries to clipboard
+- 💾 **Chat History**: Save and load chat sessions per user with session management
 
+## Project Structure
 
-![Vanna2 Demo](img/architecture.png)
-
----
-
-## What's New in 2.0
-
-🔐 **User-Aware at Every Layer** — Queries automatically filtered per user permissions
-
-🎨 **Modern Web Interface** — Beautiful pre-built `<vanna-chat>` component
-
-⚡ **Streaming Responses** — Real-time tables, charts, and progress updates
-
-🔒 **Enterprise Security** — Row-level security, audit logs, rate limiting
-
-🔄 **Production-Ready** — FastAPI integration, observability, lifecycle hooks
-
-> **Upgrading from 0.x?** See the [Migration Guide](MIGRATION_GUIDE.md) | [What changed?](#migration-notes)
-
----
-
-## Get Started
-
-### Try it with Sample Data
-
-[Quickstart](https://vanna.ai/docs/quick-start)
-
-### Configure
-
-[Configure](https://vanna.ai/docs/configure)
-
-### Web Component
-
-```html
-<!-- Drop into any existing webpage -->
-<script src="https://img.vanna.ai/vanna-components.js"></script>
-<vanna-chat
-  sse-endpoint="https://your-api.com/chat"
-  theme="dark">
-</vanna-chat>
+```
+hec-bot/
+├── app/
+│   ├── __init__.py        # Flask app factory
+│   ├── config.py          # Environment-based configuration
+│   ├── vanna_setup.py     # Vanna AI + Gemini + ChromaDB init
+│   ├── auth.py            # Simple password authentication
+│   ├── cache.py           # In-memory cache
+│   ├── chat_history.py    # Chat session storage and management
+│   └── routes.py          # All API endpoints
+├── data/                  # Runtime data and generated training files
+│   ├── chromadb_data/     # ChromaDB vector storage
+│   ├── chat_history.json  # User chat sessions
+│   └── training_data_full.json
+├── scripts/               # Utility and retraining scripts
+│   ├── generate_training_data.py
+│   └── retrain_full.py
+├── static/                # Frontend assets
+│   ├── assets/            # CSS and JS bundles
+│   ├── index.html         # ChatBot interface
+│   ├── training-data.html # Training data management
+│   ├── sidebar.css        # Sidebar styles
+│   └── *.png, *.svg       # Images and icons
+├── references/            # Reference Laravel project (HecPoll 3)
+├── .env                   # Environment variables (not committed)
+├── .env.example           # Template for .env
+├── app.py                 # Local dev entry point
+├── wsgi.py                # Production WSGI entry point
+├── LICENSE
+├── README.md
+└── requirements.txt
 ```
 
-Uses your existing cookies/JWTs. Works with React, Vue, or plain HTML.
+## Setup
 
----
-
-## What You Get
-
-Ask a question in natural language and get back:
-
-**1. Streaming Progress Updates**
-
-**2. SQL Code Block (By default only shown to "admin" users)**
-
-**3. Interactive Data Table**
-
-**4. Charts** (Plotly visualizations)
-
-**5. Natural Language Summary**
-
-All streamed in real-time to your web component.
-
----
-
-## Why Vanna 2.0?
-
-### ✅ Get Started Instantly
-* Production chat interface
-* Custom agent with your database
-* Embed in any webpage
-
-### ✅ Enterprise-Ready Security
-**User-aware at every layer** — Identity flows through system prompts, tool execution, and SQL filtering
-**Row-level security** — Queries automatically filtered per user permissions
-**Audit logs** — Every query tracked per user for compliance
-**Rate limiting** — Per-user quotas via lifecycle hooks
-
-### ✅ Beautiful Web UI Included
-**Pre-built `<vanna-chat>` component** — No need to build your own chat interface
-**Streaming tables & charts** — Rich components, not just text
-**Responsive & customizable** — Works on mobile, desktop, light/dark themes
-**Framework-agnostic** — React, Vue, plain HTML
-
-### ✅ Works With Your Stack
-**Any LLM:** OpenAI, Anthropic, Ollama, Azure, Google Gemini, AWS Bedrock, Mistral, Others
-**Any Database:** PostgreSQL, MySQL, Snowflake, BigQuery, Redshift, SQLite, Oracle, SQL Server, DuckDB, ClickHouse, Others
-**Your Auth System:** Bring your own — cookies, JWTs, OAuth tokens
-**Your Framework:** FastAPI, Flask
-
-### ✅ Extensible But Opinionated
-**Custom tools** — Extend the `Tool` base class
-**Lifecycle hooks** — Quota checking, logging, content filtering
-**LLM middlewares** — Caching, prompt engineering
-**Observability** — Built-in tracing and metrics
-
----
-
-## Architecture
-
-![Vanna2 Diagram](img/vanna2.svg)
-
----
-
-## How It Works
-
-```mermaid
-sequenceDiagram
-    participant U as 👤 User
-    participant W as 🌐 <vanna-chat>
-    participant S as 🐍 Your Server
-    participant A as 🤖 Agent
-    participant T as 🧰 Tools
-
-    U->>W: "Show Q4 sales"
-    W->>S: POST /api/vanna/v2/chat_sse (with auth)
-    S->>A: User(id=alice, groups=[read_sales])
-    A->>T: Execute SQL tool (user-aware)
-    T->>T: Apply row-level security
-    T->>A: Filtered results
-    A->>W: Stream: Table → Chart → Summary
-    W->>U: Display beautiful UI
+### 1. Clone the repository
+```bash
+git clone <repository-url>
+cd hec-bot
 ```
 
-**Key Concepts:**
+### 2. Create virtual environment
+```bash
+python -m venv venv
 
-1. **User Resolver** — You define how to extract user identity from requests (cookies, JWTs, etc.)
-2. **User-Aware Tools** — Tools automatically check permissions based on user's group memberships
-3. **Streaming Components** — Backend streams structured UI components (tables, charts) to frontend
-4. **Built-in Web UI** — Pre-built `<vanna-chat>` component renders everything beautifully
+# Windows
+venv\Scripts\activate
 
----
-
-## Production Setup with Your Auth
-
-Here's a complete example integrating Vanna with your existing FastAPI app and authentication:
-
-```python
-from fastapi import FastAPI
-from vanna import Agent
-from vanna.servers.fastapi.routes import register_chat_routes
-from vanna.servers.base import ChatHandler
-from vanna.core.user import UserResolver, User, RequestContext
-from vanna.integrations.anthropic import AnthropicLlmService
-from vanna.tools import RunSqlTool
-from vanna.integrations.sqlite import SqliteRunner
-from vanna.core.registry import ToolRegistry
-
-# Your existing FastAPI app
-app = FastAPI()
-
-# 1. Define your user resolver (using YOUR auth system)
-class MyUserResolver(UserResolver):
-    async def resolve_user(self, request_context: RequestContext) -> User:
-        # Extract from cookies, JWTs, or session
-        token = request_context.get_header('Authorization')
-        user_data = self.decode_jwt(token)  # Your existing logic
-
-        return User(
-            id=user_data['id'],
-            email=user_data['email'],
-            group_memberships=user_data['groups']  # Used for permissions
-        )
-
-# 2. Set up agent with tools
-llm = AnthropicLlmService(model="claude-sonnet-4-5")
-tools = ToolRegistry()
-tools.register(RunSqlTool(sql_runner=SqliteRunner("./data.db")))
-
-agent = Agent(
-    llm_service=llm,
-    tool_registry=tools,
-    user_resolver=MyUserResolver()
-)
-
-# 3. Add Vanna routes to your app
-chat_handler = ChatHandler(agent)
-register_chat_routes(app, chat_handler)
-
-# Now you have:
-# - POST /api/vanna/v2/chat_sse (streaming endpoint)
-# - GET / (optional web UI)
+# Linux/Mac
+source venv/bin/activate
 ```
 
-**Then in your frontend:**
-```html
-<vanna-chat sse-endpoint="/api/vanna/v2/chat_sse"></vanna-chat>
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
 ```
 
-See [Full Documentation](https://vanna.ai/docs) for custom tools, lifecycle hooks, and advanced configuration
-
----
-
-## Custom Tools
-
-Extend Vanna with custom tools for your specific use case:
-
-```python
-from vanna.core.tool import Tool, ToolContext, ToolResult
-from pydantic import BaseModel, Field
-from typing import Type
-
-class EmailArgs(BaseModel):
-    recipient: str = Field(description="Email recipient")
-    subject: str = Field(description="Email subject")
-
-class EmailTool(Tool[EmailArgs]):
-    @property
-    def name(self) -> str:
-        return "send_email"
-
-    @property
-    def access_groups(self) -> list[str]:
-        return ["send_email"]  # Permission check
-
-    def get_args_schema(self) -> Type[EmailArgs]:
-        return EmailArgs
-
-    async def execute(self, context: ToolContext, args: EmailArgs) -> ToolResult:
-        user = context.user  # Automatically injected
-
-        # Your business logic
-        await self.email_service.send(
-            from_email=user.email,
-            to=args.recipient,
-            subject=args.subject
-        )
-
-        return ToolResult(success=True, result_for_llm=f"Email sent to {args.recipient}")
-
-# Register your tool
-tools.register(EmailTool())
+### 4. Configure environment variables
+Copy `.env.example` to `.env` and fill in your credentials:
+```bash
+cp .env.example .env
 ```
 
----
+Edit `.env` file:
+```env
+# Database Configuration
+DB_HOST=your_database_host
+DB_PORT=1433
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
 
-## Advanced Features
+# Gemini API
+GEMINI_API_KEY=your_gemini_api_key
 
-Vanna 2.0 includes powerful enterprise features for production use:
+# Authentication
+ADMIN_PASSWORD=your_admin_password
 
-**Lifecycle Hooks** — Add quota checking, custom logging, content filtering at key points in the request lifecycle
+# Flask Configuration
+FLASK_SECRET_KEY=your_secret_key
+FLASK_ENV=development
+```
 
-**LLM Middlewares** — Implement caching, prompt engineering, or cost tracking around LLM calls
+### 5. Generate training data (optional)
+```bash
+python scripts/generate_training_data.py
+```
 
-**Conversation Storage** — Persist and retrieve conversation history per user
+### 6. Train the model (optional)
+```bash
+python scripts/retrain_full.py
+```
 
-**Observability** — Built-in tracing and metrics integration
+### 7. Run the application
+```bash
+# Development
+python app.py
 
-**Context Enrichers** — Add RAG, memory, or documentation to enhance agent responses
+# Production with Gunicorn
+pip install gunicorn
+gunicorn wsgi:app --bind 0.0.0.0:5000 --workers 4
+```
 
-**Agent Configuration** — Control streaming, temperature, max iterations, and more
+The application will be available at `http://localhost:5000`
 
----
+## Usage
 
-## Use Cases
+### Web Interface
 
-**Vanna is ideal for:**
-- 📊 Data analytics applications with natural language interfaces
-- 🔐 Multi-tenant SaaS needing user-aware permissions
-- 🎨 Teams wanting a pre-built web component + backend
-- 🏢 Enterprise environments with security/audit requirements
-- 📈 Applications needing rich streaming responses (tables, charts, SQL)
-- 🔄 Integrating with existing authentication systems
+1. **Login**: Navigate to `http://localhost:5000` and enter your admin password
+2. **ChatBot**: Ask questions in natural language about your database
+   - Example: "What is the total quantity per terminal?"
+   - Example: "Show me all transactions from last week"
+   - Click "Chat History" in sidebar to view/load previous conversations
+   - Click "New Chat" to start a fresh conversation
+   - All chats are automatically saved per user
+3. **Training Data**: Manage training data at `http://localhost:5000/training-data`
+   - Add new SQL examples
+   - Add DDL statements
+   - Add documentation
+   - Edit or delete existing training data
 
----
+### API Endpoints
 
-## Community & Support
+#### Authentication
+- `POST /api/v0/login` - Login with password
+- `GET /api/v0/logout` - Logout
 
-- 📖 **[Full Documentation](https://vanna.ai/docs)** — Complete guides and API reference
-- 💡 **[GitHub Discussions](https://github.com/vanna-ai/vanna/discussions)** — Feature requests and Q&A
-- 🐛 **[GitHub Issues](https://github.com/vanna-ai/vanna/issues)** — Bug reports
-- 📧 **Enterprise Support** — support@vanna.ai
+#### Chat
+- `POST /api/v0/ask` - Ask a question
+  ```json
+  {
+    "question": "What is the total quantity per terminal?"
+  }
+  ```
 
----
+#### Chat History
+- `GET /api/v0/chat/sessions` - Get all chat sessions for current user
+- `POST /api/v0/chat/sessions` - Save/update a chat session
+  ```json
+  {
+    "session_id": "optional-uuid",
+    "title": "Chat title",
+    "messages": [{"text": "...", "isUser": true, "data": {}, "time": "..."}]
+  }
+  ```
+- `GET /api/v0/chat/sessions/<session_id>` - Get specific chat session
+- `DELETE /api/v0/chat/sessions/<session_id>` - Delete a chat session
+- `PUT /api/v0/chat/sessions/<session_id>/title` - Update session title
+  ```json
+  {
+    "title": "New title"
+  }
+  ```
 
-## Migration Notes
+#### Training Data
+- `GET /api/v0/get_training_data` - Get all training data
+- `POST /api/v0/train` - Add new training data
+  ```json
+  {
+    "question": "What is the total quantity?",
+    "sql": "SELECT SUM(TransQuantity) FROM Transactions"
+  }
+  ```
+  or
+  ```json
+  {
+    "ddl": "CREATE TABLE ..."
+  }
+  ```
+  or
+  ```json
+  {
+    "documentation": "This table stores..."
+  }
+  ```
+- `POST /api/v0/remove_training_data` - Remove training data
+  ```json
+  {
+    "id": "training-data-id"
+  }
+  ```
 
-**Upgrading from Vanna 0.x?**
+#### Health Check
+- `GET /api/v0/health` - Check API health status
 
-Vanna 2.0 is a complete rewrite focused on user-aware agents and production deployments. Key changes:
+## Technologies Used
 
-- **New API**: Agent-based instead of `VannaBase` class methods
-- **User-aware**: Every component now knows the user identity
-- **Streaming**: Rich UI components instead of text/dataframes
-- **Web-first**: Built-in `<vanna-chat>` component and server
+- **Backend**: Flask (Python)
+- **AI/ML**: Vanna AI, Google Gemini
+- **Database**: MSSQL Server
+- **Vector DB**: ChromaDB
+- **Frontend**: Vanilla JavaScript, HTML5, CSS3
+- **Icons**: Font Awesome
+- **Fonts**: Inter (Google Fonts)
 
-**Migration path:**
+## Project Structure Details
 
-1. **Quick wrap** — Use `LegacyVannaAdapter` to wrap your existing Vanna 0.x instance and get the new web UI immediately
-2. **Gradual migration** — Incrementally move to the new Agent API and tools
+### `/app` - Application Core
+- `__init__.py`: Flask application factory and initialization
+- `config.py`: Configuration management (dev/prod environments)
+- `vanna_setup.py`: Vanna AI and ChromaDB setup
+- `auth.py`: Authentication middleware
+- `cache.py`: In-memory caching for query results
+- `routes.py`: All API endpoints and route handlers
 
-See the complete [Migration Guide](MIGRATION_GUIDE.md) for step-by-step instructions.
+### `/data` - Runtime Data
+- `chromadb_data/`: ChromaDB vector database storage
+- `training_data_full.json`: Complete training data backup
 
----
+### `/scripts` - Utility Scripts
+- `generate_training_data.py`: Generate training data from database
+- `retrain_full.py`: Retrain model with all training data
+
+### `/static` - Frontend Assets
+- `index.html`: ChatBot interface
+- `training-data.html`: Training data management interface
+- `sidebar.css`: Shared sidebar styles
+- `assets/`: Compiled CSS and JS bundles
+
+### `/references` - Reference Project
+- Contains the Laravel HecPoll 3 project for reference
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT License — See [LICENSE](LICENSE) for details.
-
----
-
-**Built with ❤️ by the Vanna team** | [Website](https://vanna.ai) | [Docs](https://vanna.ai/docs) | [Discussions](https://github.com/vanna-ai/vanna/discussions)
+See LICENSE file for details.

@@ -1,0 +1,891 @@
+{
+  "fauzi@hectronic.in": {
+    "4f0abb09-7c3b-44d4-b4bf-b2b70bd4791d": {
+      "title": "total transaksi dibulan januari 2026",
+      "messages": [
+        {
+          "isUser": true,
+          "text": "total transaksi dibulan januari 2026",
+          "time": "09:41 PM"
+        },
+        {
+          "data": {
+            "allResults": [
+              {
+                "TotalTransactions": 6046
+              }
+            ],
+            "results": [
+              {
+                "TotalTransactions": 6046
+              }
+            ],
+            "sql": "SELECT COUNT(*) AS TotalTransactions\nFROM PAYMENTS\nWHERE TransDateTime >= '2026-01-01 00:00:00' AND TransDateTime <= '2026-01-31 23:59:59';"
+          },
+          "isUser": false,
+          "text": "I found 1 result(s) for your question.",
+          "time": "09:41 PM"
+        },
+        {
+          "text": "terminal mana yang paling banyak melakukan transaksi",
+          "isUser": true,
+          "time": "09:42 PM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT TOP 1\n    T.Description AS TerminalDescription,\n    T.city AS TerminalCity,\n    COUNT(P.ID_PAYMENTS) AS NumberOfTransactions\nFROM\n    PAYMENTS AS P\nJOIN\n    TERMINALS AS T\nON\n    P.TerminalsID = T.ID_TERMINALS\nGROUP BY\n    T.Description,\n    T.city\nORDER BY\n    NumberOfTransactions DESC;",
+            "results": [
+              {
+                "TerminalDescription": "FT-03",
+                "TerminalCity": "6",
+                "NumberOfTransactions": 62598
+              }
+            ],
+            "allResults": [
+              {
+                "TerminalDescription": "FT-03",
+                "TerminalCity": "6",
+                "NumberOfTransactions": 62598
+              }
+            ]
+          },
+          "time": "09:43 PM"
+        },
+        {
+          "text": "kenapa total transaksi 6046 dan paling banyak di FT-03 total transaksi 62598",
+          "isUser": true,
+          "time": "09:43 PM"
+        },
+        {
+          "text": "Sorry, I encountered an error: (pyodbc.ProgrammingError) ('42000', \"[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'context'. (102) (SQLExecDirectW)\")\n[SQL: The provided context is insufficient to generate a SQL query to answer \"why\" the total transaction is 6046 and why FT-03 has the most transactions (62598). SQL queries are used to retrieve data, not to provide explanations or reasons for observed data patterns or specific values.]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+          "isUser": false,
+          "time": "09:44 PM"
+        },
+        {
+          "text": "terminal mana yang paling banyak melakukan transaksi januari 2026",
+          "isUser": true,
+          "time": "09:44 PM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT TOP 1 TerminalNumber\nFROM PAYMENTS\nWHERE TransDateTime >= '2026-01-01 00:00:00' AND TransDateTime < '2026-02-01 00:00:00'\nGROUP BY TerminalNumber\nORDER BY COUNT(*) DESC;",
+            "results": [
+              {
+                "TerminalNumber": "6"
+              }
+            ],
+            "allResults": [
+              {
+                "TerminalNumber": "6"
+              }
+            ]
+          },
+          "time": "09:44 PM"
+        },
+        {
+          "text": "terminal mana yang paling banyak melakukan transaksi januari 2026 dan berapa jumlah transaksinya",
+          "isUser": true,
+          "time": "09:44 PM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT TOP 1 TerminalNumber, COUNT(*) AS JumlahTransaksi\nFROM PAYMENTS\nWHERE TransDateTime >= '2026-01-01 00:00:00' AND TransDateTime < '2026-02-01 00:00:00'\nGROUP BY TerminalNumber\nORDER BY JumlahTransaksi DESC;",
+            "results": [
+              {
+                "TerminalNumber": "6",
+                "JumlahTransaksi": 2332
+              }
+            ],
+            "allResults": [
+              {
+                "TerminalNumber": "6",
+                "JumlahTransaksi": 2332
+              }
+            ]
+          },
+          "time": "09:44 PM"
+        },
+        {
+          "text": "terminal nomor 6 namanya apa",
+          "isUser": true,
+          "time": "09:45 PM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT Description FROM TERMINALS WHERE ID_TERMINALS = 6;",
+            "results": [
+              {
+                "Description": "FT-04"
+              }
+            ],
+            "allResults": [
+              {
+                "Description": "FT-04"
+              }
+            ]
+          },
+          "time": "09:45 PM"
+        }
+      ],
+      "created_at": "2026-03-30T21:45:19.383605",
+      "updated_at": "2026-03-30T21:45:19.383627"
+    },
+    "d3519d50-c29a-4483-a0f1-776194a949ee": {
+      "title": "total transaksi setiap kendaraan bulan februari",
+      "messages": [
+        {
+          "text": "total transaksi setiap kendaraan bulan februari",
+          "isUser": true,
+          "time": "09:42 PM"
+        },
+        {
+          "text": "I found 235 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT\n  V.Number AS VehicleLicensePlate,\n  SUM(P.TransAmount) AS TotalTransactionAmount,\n  SUM(P.TransQuantity) AS TotalTransactionQuantity\nFROM PAYMENTS AS P\nJOIN VEHICLES AS V\n  ON P.VehiclesID = V.ID_VEHICLES\nWHERE\n  P.TransDateTime >= '2025-02-01 00:00:00' AND P.TransDateTime < '2025-03-01 00:00:00'\nGROUP BY\n  V.Number;",
+            "results": [
+              {
+                "VehicleLicensePlate": "ADT-401",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10626.649995
+              },
+              {
+                "VehicleLicensePlate": "ADT-402",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2072.85
+              },
+              {
+                "VehicleLicensePlate": "ADT-403",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10499.150018
+              },
+              {
+                "VehicleLicensePlate": "ADT-404",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 7877.799955
+              },
+              {
+                "VehicleLicensePlate": "ADT-405",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 9568.799994
+              }
+            ],
+            "allResults": [
+              {
+                "VehicleLicensePlate": "ADT-401",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10626.649995
+              },
+              {
+                "VehicleLicensePlate": "ADT-402",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2072.85
+              },
+              {
+                "VehicleLicensePlate": "ADT-403",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10499.150018
+              },
+              {
+                "VehicleLicensePlate": "ADT-404",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 7877.799955
+              },
+              {
+                "VehicleLicensePlate": "ADT-405",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 9568.799994
+              },
+              {
+                "VehicleLicensePlate": "ADT-406",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 6508.900022
+              },
+              {
+                "VehicleLicensePlate": "ADT-407",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 9058.800021
+              },
+              {
+                "VehicleLicensePlate": "ADT-408",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10785.950047
+              },
+              {
+                "VehicleLicensePlate": "ADT-701",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2293.40003
+              },
+              {
+                "VehicleLicensePlate": "ADT-702",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1539.9
+              },
+              {
+                "VehicleLicensePlate": "ADT-703",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 6228.90003
+              },
+              {
+                "VehicleLicensePlate": "ADT-704",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 8642.95004
+              },
+              {
+                "VehicleLicensePlate": "ADT-705",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 6045.749983
+              },
+              {
+                "VehicleLicensePlate": "ADT-706",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 9700.599983
+              },
+              {
+                "VehicleLicensePlate": "ADT-707",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 9148.550039
+              },
+              {
+                "VehicleLicensePlate": "ADT-708",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 11078.000025
+              },
+              {
+                "VehicleLicensePlate": "ADT-709",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 11016.999951
+              },
+              {
+                "VehicleLicensePlate": "ADT-710",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 8188.699953
+              },
+              {
+                "VehicleLicensePlate": "ADT-711",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 12573.849987
+              },
+              {
+                "VehicleLicensePlate": "ADT-712",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10873.299961
+              },
+              {
+                "VehicleLicensePlate": "ADT-713",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 3560.6
+              },
+              {
+                "VehicleLicensePlate": "ADT-714",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 3695.2
+              },
+              {
+                "VehicleLicensePlate": "ADT-715",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 11065.949958
+              },
+              {
+                "VehicleLicensePlate": "ADT-716",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 3580.85
+              },
+              {
+                "VehicleLicensePlate": "ADT-717",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 11132.89992
+              },
+              {
+                "VehicleLicensePlate": "ADT-718",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 6779.300009
+              },
+              {
+                "VehicleLicensePlate": "ADT-719",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10279.050051
+              },
+              {
+                "VehicleLicensePlate": "ADT-720",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 11177.55001
+              },
+              {
+                "VehicleLicensePlate": "ADT-721",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 11629.700006
+              },
+              {
+                "VehicleLicensePlate": "BD-03",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1714.160006
+              },
+              {
+                "VehicleLicensePlate": "BD-04",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2971.900009
+              },
+              {
+                "VehicleLicensePlate": "BD-05",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 10020.949956
+              },
+              {
+                "VehicleLicensePlate": "BD-06",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 5871.149996
+              },
+              {
+                "VehicleLicensePlate": "BD-07",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 13352.500053
+              },
+              {
+                "VehicleLicensePlate": "BD-08",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 4104.8
+              },
+              {
+                "VehicleLicensePlate": "BD-09",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 8812.550022
+              },
+              {
+                "VehicleLicensePlate": "BD-10",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1952.1
+              },
+              {
+                "VehicleLicensePlate": "BD-11",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 9862.000003
+              },
+              {
+                "VehicleLicensePlate": "BD-12",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 9773.650005
+              },
+              {
+                "VehicleLicensePlate": "BUS-001",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 80.550003
+              },
+              {
+                "VehicleLicensePlate": "CA-02",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1130.700006
+              },
+              {
+                "VehicleLicensePlate": "CARD FT-02",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 179786.749092
+              },
+              {
+                "VehicleLicensePlate": "CARD FT-03",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 280527.8998520001
+              },
+              {
+                "VehicleLicensePlate": "DT-001",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1885.150004
+              },
+              {
+                "VehicleLicensePlate": "DT-003",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 378.450001
+              },
+              {
+                "VehicleLicensePlate": "DT-006",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 433.6
+              },
+              {
+                "VehicleLicensePlate": "DT-020",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2205.799979
+              },
+              {
+                "VehicleLicensePlate": "DT-021",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1539.800002
+              },
+              {
+                "VehicleLicensePlate": "DT-101",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1781.599985
+              },
+              {
+                "VehicleLicensePlate": "DT-102",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2004.299991
+              },
+              {
+                "VehicleLicensePlate": "DT-103",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 877.050004
+              },
+              {
+                "VehicleLicensePlate": "DT-104",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1534.149998
+              },
+              {
+                "VehicleLicensePlate": "DT-105",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 871.800008
+              },
+              {
+                "VehicleLicensePlate": "DT-108",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1463.899999
+              },
+              {
+                "VehicleLicensePlate": "DT-109",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 805.699999
+              },
+              {
+                "VehicleLicensePlate": "DT-110",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1440.500008
+              },
+              {
+                "VehicleLicensePlate": "DT-111",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 668.05
+              },
+              {
+                "VehicleLicensePlate": "DT-112",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 452.65
+              },
+              {
+                "VehicleLicensePlate": "DT-231",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1854.800024
+              },
+              {
+                "VehicleLicensePlate": "DT-232",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1462.100006
+              },
+              {
+                "VehicleLicensePlate": "DT-233",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 937.349989
+              },
+              {
+                "VehicleLicensePlate": "DT-234",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1975.999997
+              },
+              {
+                "VehicleLicensePlate": "DT-235",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1464.200002
+              },
+              {
+                "VehicleLicensePlate": "DT-306",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1938.950012
+              },
+              {
+                "VehicleLicensePlate": "DT-307",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2480.500028
+              },
+              {
+                "VehicleLicensePlate": "DT-308",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1277.350016
+              },
+              {
+                "VehicleLicensePlate": "DT-309",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 782.25
+              },
+              {
+                "VehicleLicensePlate": "DT-310",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 724.549992
+              },
+              {
+                "VehicleLicensePlate": "DT-312",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1691.650002
+              },
+              {
+                "VehicleLicensePlate": "DT-316",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 563.849996
+              },
+              {
+                "VehicleLicensePlate": "DT-323",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1879.25
+              },
+              {
+                "VehicleLicensePlate": "DT-326",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1820.099984
+              },
+              {
+                "VehicleLicensePlate": "DT-327",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1197.650002
+              },
+              {
+                "VehicleLicensePlate": "DT-402",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 623.849995
+              },
+              {
+                "VehicleLicensePlate": "DT-403",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1096.200004
+              },
+              {
+                "VehicleLicensePlate": "DT-404",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2236.700014
+              },
+              {
+                "VehicleLicensePlate": "DT-405",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1149.899991
+              },
+              {
+                "VehicleLicensePlate": "DT-406",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 296.349998
+              },
+              {
+                "VehicleLicensePlate": "DT-409",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1606.799997
+              },
+              {
+                "VehicleLicensePlate": "DT-411",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 884.50001
+              },
+              {
+                "VehicleLicensePlate": "DT-708",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 777.949992
+              },
+              {
+                "VehicleLicensePlate": "DT-709",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 925.399998
+              },
+              {
+                "VehicleLicensePlate": "DT-710",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2255.10001
+              },
+              {
+                "VehicleLicensePlate": "DT-711",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1945.700011
+              },
+              {
+                "VehicleLicensePlate": "DT-712",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1004.050004
+              },
+              {
+                "VehicleLicensePlate": "DT-714",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 308.999998
+              },
+              {
+                "VehicleLicensePlate": "DT-715",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1515.750001
+              },
+              {
+                "VehicleLicensePlate": "DT-716",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 846.799998
+              },
+              {
+                "VehicleLicensePlate": "DT-718",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2425.800005
+              },
+              {
+                "VehicleLicensePlate": "DT-719",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 914.350005
+              },
+              {
+                "VehicleLicensePlate": "DT-721",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1301.449996
+              },
+              {
+                "VehicleLicensePlate": "DT-722",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 469.600008
+              },
+              {
+                "VehicleLicensePlate": "DT-723",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 420.149993
+              },
+              {
+                "VehicleLicensePlate": "DT-906",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2518.799985
+              },
+              {
+                "VehicleLicensePlate": "DT-907",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 889.300003
+              },
+              {
+                "VehicleLicensePlate": "DT-908",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1309.850009
+              },
+              {
+                "VehicleLicensePlate": "DT-911",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 210.25
+              },
+              {
+                "VehicleLicensePlate": "DT-912",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2409.450004
+              },
+              {
+                "VehicleLicensePlate": "DT-915",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 2174.649989
+              },
+              {
+                "VehicleLicensePlate": "DT-918",
+                "TotalTransactionAmount": 0,
+                "TotalTransactionQuantity": 1059.500003
+              }
+            ]
+          },
+          "time": "09:42 PM"
+        }
+      ],
+      "created_at": "2026-03-30T21:42:08.197091",
+      "updated_at": "2026-03-30T21:42:08.197103"
+    },
+    "470fe818-6dfb-49b2-8739-7c4e1dd6bdd7": {
+      "title": "total transaksi dibulan februari",
+      "messages": [
+        {
+          "text": "total transaksi dibulan februari",
+          "isUser": true,
+          "time": "09:15 AM"
+        },
+        {
+          "text": "Sorry, I encountered an error: (pyodbc.ProgrammingError) ('42000', \"[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near 'context'. (102) (SQLExecDirectW)\")\n[SQL: The provided context is insufficient. The question \"total transaksi dibulan februari\" does not specify the year for which the total transactions are requested.]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+          "isUser": false,
+          "time": "09:15 AM"
+        }
+      ],
+      "created_at": "2026-03-31T09:15:16.708587",
+      "updated_at": "2026-03-31T09:15:16.708595"
+    },
+    "e0b3ae2f-524b-4f0a-8ee5-425e6385acc1": {
+      "title": "total transaksi FT-02 di bulan februari",
+      "messages": [
+        {
+          "text": "total transaksi FT-02 di bulan februari",
+          "isUser": true,
+          "time": "09:15 AM"
+        },
+        {
+          "text": "Sorry, I encountered an error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 7.657050088s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 7\n}\n]",
+          "isUser": false,
+          "time": "09:15 AM"
+        }
+      ],
+      "created_at": "2026-03-31T09:15:38.937570",
+      "updated_at": "2026-03-31T09:15:38.937608"
+    },
+    "dcb9cc81-90b0-46f2-92f5-4c96a6b6e3c6": {
+      "title": "total transaksi FT-03 bulan februari",
+      "messages": [
+        {
+          "text": "total transaksi FT-03 bulan februari",
+          "isUser": true,
+          "time": "09:17 AM"
+        },
+        {
+          "text": "Sorry, I encountered an error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 56.815189042s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 56\n}\n]",
+          "isUser": false,
+          "time": "09:17 AM"
+        }
+      ],
+      "created_at": "2026-03-31T09:17:50.109431",
+      "updated_at": "2026-03-31T09:17:50.109441"
+    },
+    "88ab495f-cc91-4e6b-b523-7905df96c56a": {
+      "title": "total penerimaan fuel di bulan februari",
+      "messages": [
+        {
+          "text": "total penerimaan fuel di bulan februari",
+          "isUser": true,
+          "time": "09:19 AM"
+        },
+        {
+          "text": "Sorry, I encountered an error: (pyodbc.ProgrammingError) ('42S22', \"[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'TotalReceived'. (207) (SQLExecDirectW)\")\n[SQL: SELECT\n  SUM(TotalReceived) AS TotalFuelReceived\nFROM STOCKS\nWHERE\n  MONTH(trans_date) = 2;]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+          "isUser": false,
+          "time": "09:19 AM"
+        }
+      ],
+      "created_at": "2026-03-31T09:19:17.934789",
+      "updated_at": "2026-03-31T09:19:17.934800"
+    },
+    "b8a92851-9828-41da-bc07-82f289c87679": {
+      "title": "how much consumation fuel in january 2026 ADR-401",
+      "messages": [
+        {
+          "text": "how much consumation fuel in january 2026 ADR-401",
+          "isUser": true,
+          "time": "09:19 AM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT SUM(p.TransQuantity) AS TotalLiters\nFROM PAYMENTS p\nJOIN VEHICLES v ON p.VehiclesID = v.ID_VEHICLES\nWHERE v.Number = 'ADR-401'\n  AND p.TransDateTime BETWEEN '2026-01-01 00:00' AND '2026-01-31 23:59';",
+            "results": [
+              {
+                "TotalLiters": null
+              }
+            ],
+            "allResults": [
+              {
+                "TotalLiters": null
+              }
+            ]
+          },
+          "time": "09:19 AM"
+        }
+      ],
+      "created_at": "2026-03-31T09:19:55.394951",
+      "updated_at": "2026-03-31T09:19:55.394959"
+    },
+    "a06923a5-4197-46c4-a427-de624efbe29c": {
+      "title": "how much consumation fuel in january 2026 ADT-401",
+      "messages": [
+        {
+          "text": "how much consumation fuel in january 2026 ADT-401",
+          "isUser": true,
+          "time": "09:20 AM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT SUM(p.TransQuantity) AS TotalLiters\nFROM PAYMENTS p\nJOIN VEHICLES v ON p.VehiclesID = v.ID_VEHICLES\nWHERE v.Number = 'ADT-401'\n  AND p.TransDateTime BETWEEN '2026-01-01 00:00' AND '2026-01-31 23:59';",
+            "results": [
+              {
+                "TotalLiters": 4751.850057
+              }
+            ],
+            "allResults": [
+              {
+                "TotalLiters": 4751.850057
+              }
+            ]
+          },
+          "time": "09:20 AM"
+        }
+      ],
+      "created_at": "2026-03-31T09:20:14.327497",
+      "updated_at": "2026-03-31T09:20:14.327505"
+    },
+    "356ccd54-3d2e-4b37-9b52-889542a1fea1": {
+      "title": "how much consumation fuel in january 2026 all ADT",
+      "messages": [
+        {
+          "text": "how much consumation fuel in january 2026 all ADT",
+          "isUser": true,
+          "time": "09:20 AM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT\n  SUM(p.TransQuantity) AS TotalFuelConsumption\nFROM PAYMENTS AS p\nJOIN VEHICLES AS v\n  ON p.VehiclesID = v.ID_VEHICLES\nJOIN VEHICLEGROUPS AS vg\n  ON v.VehicleGroupsID = vg.ID_VEHICLEGROUPS\nWHERE\n  vg.Description = 'ADT' AND p.TransDateTime >= '2026-01-01 00:00:00' AND p.TransDateTime < '2026-02-01 00:00:00';",
+            "results": [
+              {
+                "TotalFuelConsumption": null
+              }
+            ],
+            "allResults": [
+              {
+                "TotalFuelConsumption": null
+              }
+            ]
+          },
+          "time": "09:20 AM"
+        },
+        {
+          "text": "pada semua dump truck",
+          "isUser": true,
+          "time": "09:20 AM"
+        },
+        {
+          "text": "Sorry, I encountered an error: (pyodbc.ProgrammingError) ('42000', \"[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near the keyword 'is'. (156) (SQLExecDirectW)\")\n[SQL: The LLM is not allowed to see the data in your database. Your question requires database introspection to generate the necessary SQL. Please set allow_llm_to_see_data=True to enable this.]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+          "isUser": false,
+          "time": "09:20 AM"
+        }
+      ],
+      "created_at": "2026-03-31T09:20:42.503683",
+      "updated_at": "2026-03-31T09:20:42.503707"
+    }
+  },
+  "mani@hectronic.in": {
+    "33eb7e1c-b9bd-4f22-a456-416c3d268166": {
+      "title": "transaksi total kendaraan dibulan desember 2025",
+      "messages": [
+        {
+          "text": "transaksi total kendaraan dibulan desember 2025",
+          "isUser": true,
+          "time": "09:45 PM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT COUNT(*) AS TotalTransactions\nFROM PAYMENTS\nWHERE TransDateTime >= '2025-12-01 00:00:00' AND TransDateTime < '2026-01-01 00:00:00';",
+            "results": [
+              {
+                "TotalTransactions": 5980
+              }
+            ],
+            "allResults": [
+              {
+                "TotalTransactions": 5980
+              }
+            ]
+          },
+          "time": "09:45 PM"
+        }
+      ],
+      "created_at": "2026-03-30T21:45:57.275004",
+      "updated_at": "2026-03-30T21:45:57.275010"
+    }
+  }
+}

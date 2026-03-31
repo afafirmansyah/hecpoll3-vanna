@@ -1,0 +1,17 @@
+-- Script untuk SELECT semua data dari dev PC
+-- Jalankan satu per satu dan kirimkan hasilnya
+
+-- 1. ROLES table
+SELECT * FROM ROLES ORDER BY id;
+
+-- 2. PERMISSIONS table  
+SELECT * FROM PERMISSIONS ORDER BY id;
+
+-- 3. ROLE_PERMISSIONS table
+SELECT * FROM ROLE_PERMISSIONS ORDER BY id;
+
+-- 4. TERMINAL_CONFIGURATIONS table
+SELECT * FROM TERMINAL_CONFIGURATIONS ORDER BY id;
+
+-- 5. USER_ACCESS table (jika ada)
+SELECT * FROM USER_ACCESS ORDER BY id;

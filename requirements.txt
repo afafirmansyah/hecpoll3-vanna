@@ -1,0 +1,5 @@
+flask
+vanna[chromadb,google]==0.7.9
+pyodbc
+python-dotenv
+bcrypt

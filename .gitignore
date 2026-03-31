@@ -1,28 +1,64 @@
-build
-**.egg-info
-venn
-.DS_Store
-tests/__pycache__
-__pycache__/
-.idea
-.coverage
-docs/*.html
-.ipynb_checkpoints/
-.tox/
-notebooks/chroma.sqlite3
-dist
+# Environment variables
 .env
-*.sqlite
-htmlcov
-chroma.sqlite3
-*.bin
-.coverage.*
-milvus.db
-.milvus.db.lock
 
-# Frontend builds and dependencies
-frontends/**/node_modules/
-frontends/**/static/
-frontends/**/.storybook-static/
-frontends/**/package-lock.json
-frontends/**/.mypy_cache/
+# Python
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+PIPFILE.lock
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# ChromaDB data
+chromadb_data/
+data/chromadb_data/
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+.cache/
+
+# OS files
+Thumbs.db
+.DS_Store
