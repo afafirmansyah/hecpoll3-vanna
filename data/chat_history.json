@@ -854,6 +854,110 @@
       ],
       "created_at": "2026-03-31T09:20:42.503683",
       "updated_at": "2026-03-31T09:20:42.503707"
+    },
+    "0a2ca429-11cc-481a-ae0b-9eb88d9640af": {
+      "title": "total transaksi dibulan januari 2026",
+      "messages": [
+        {
+          "text": "total transaksi dibulan januari 2026",
+          "isUser": true,
+          "time": "10:27 AM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT COUNT(*) AS TotalTransactions\nFROM PAYMENTS\nWHERE TransDateTime >= '2026-01-01 00:00:00' AND TransDateTime <= '2026-01-31 23:59:59';",
+            "results": [
+              {
+                "TotalTransactions": 6046
+              }
+            ],
+            "allResults": [
+              {
+                "TotalTransactions": 6046
+              }
+            ]
+          },
+          "time": "10:27 AM"
+        }
+      ],
+      "created_at": "2026-03-31T10:27:42.439346",
+      "updated_at": "2026-03-31T10:27:42.439352"
+    },
+    "98ba99b6-2f40-4a08-9341-eef6ad299e68": {
+      "title": "jumlah quantity transaksi unloading bulan januari ",
+      "messages": [
+        {
+          "text": "jumlah quantity transaksi unloading bulan januari 2026",
+          "isUser": true,
+          "time": "03:46 PM"
+        },
+        {
+          "text": "Sorry, I encountered an error: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near \\'context\\'. (102) (SQLExecDirectW); [42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Unclosed quotation mark after the character string \\' primary description as \"fuel dispensing and refueling.\"\\'. (105)')\n[SQL: The provided context is insufficient to generate a SQL query for \"jumlah quantity transaksi unloading bulan januari 2026\".\n\nHere's why:\n*   The `PAYMENTS` table records \"every fuel dispensing and refueling transaction.\" This implies outgoing fuel. \"Unloading\" typically refers to receiving fuel into tanks. There is no column in `PAYMENTS` that explicitly identifies an \"unloading\" transaction, nor is there any indication that \"unloading\" transactions are recorded in this table.\n*   The `STOCKS` table has a `TotalReceived` column, which represents the total fuel received (unloaded) for a given day. However, this is a daily aggregate and not a \"transaction quantity\" for individual unloading events as implied by \"transaksi unloading\". The `STOCKS` table does not provide transaction-level detail.\n*   While `TERMINAL_CONFIGURATIONS` mentions `decantation` and `toploading` as `operation_type`s (which are related to receiving fuel), there's no explicit link or description stating that `PAYMENTS` records transactions for these operation types, especially given `PAYMENTS`' primary description as \"fuel dispensing and refueling.\"]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+          "isUser": false,
+          "time": "03:46 PM"
+        },
+        {
+          "text": "jumlah quantity pada terminal unloading di bulan januari 2026",
+          "isUser": true,
+          "time": "03:47 PM"
+        },
+        {
+          "text": "Sorry, I encountered an error: (pyodbc.ProgrammingError) ('42000', \"[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Incorrect syntax near the keyword 'is'. (156) (SQLExecDirectW)\")\n[SQL: The LLM is not allowed to see the data in your database. Your question requires database introspection to generate the necessary SQL. Please set allow_llm_to_see_data=True to enable this.]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+          "isUser": false,
+          "time": "03:47 PM"
+        }
+      ],
+      "created_at": "2026-04-06T15:47:18.681115",
+      "updated_at": "2026-04-06T15:47:18.681121"
+    },
+    "aa101b96-eed4-4315-92b4-864e66023c35": {
+      "title": "how much receiving fuel in january 2026 in",
+      "messages": [
+        {
+          "text": "how much receiving fuel in january 2026 in",
+          "isUser": true,
+          "time": "03:48 PM"
+        },
+        {
+          "text": "Sorry, I encountered an error: (pyodbc.ProgrammingError) ('42S22', \"[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'TotalReceived'. (207) (SQLExecDirectW)\")\n[SQL: SELECT SUM(TotalReceived) AS TotalReceivingFuel FROM STOCKS WHERE trans_date BETWEEN '2026-01-01' AND '2026-01-31';]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+          "isUser": false,
+          "time": "03:48 PM"
+        }
+      ],
+      "created_at": "2026-04-06T15:48:19.349383",
+      "updated_at": "2026-04-06T15:48:19.349391"
+    },
+    "11fc89dc-6af5-4250-b51b-d182c7e2940c": {
+      "title": "total transaksi dibulan januari 2026",
+      "messages": [
+        {
+          "text": "total transaksi dibulan januari 2026",
+          "isUser": true,
+          "time": "03:48 PM"
+        },
+        {
+          "text": "I found 1 result(s) for your question.",
+          "isUser": false,
+          "data": {
+            "sql": "SELECT COUNT(*) AS TotalTransactions\nFROM PAYMENTS\nWHERE TransDateTime >= '2026-01-01 00:00:00' AND TransDateTime <= '2026-01-31 23:59:59';",
+            "results": [
+              {
+                "TotalTransactions": 6046
+              }
+            ],
+            "allResults": [
+              {
+                "TotalTransactions": 6046
+              }
+            ]
+          },
+          "time": "03:48 PM"
+        }
+      ],
+      "created_at": "2026-04-06T15:48:51.450073",
+      "updated_at": "2026-04-06T15:48:51.450086"
     }
   },
   "mani@hectronic.in": {
